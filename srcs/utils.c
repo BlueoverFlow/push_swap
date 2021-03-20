@@ -17,7 +17,7 @@ void    init_(t_checker *checker, int argc, char **argv)
     (*checker).argv = argv;
 }
 
-void    get_args(t_checker *checker, t_stack_a **stack_a)
+void    get_args(t_checker *checker, t_stack **a)
 {
     int     i;
 
@@ -27,32 +27,32 @@ void    get_args(t_checker *checker, t_stack_a **stack_a)
     while (i < checker->argc)
     {
         is_num(checker->argv[i]);
-        push(stack_a, ft_atoi(checker->argv[i]));
-        stack_a = &((*stack_a)->next);
+        push(a, ft_atoi(checker->argv[i]));
+        a = &((*a)->next);
         i++;
     }
 }
 
-t_stack_b *exec_instr(char *str, t_stack_a **stack_a)
+void    exec_instr(char *str, t_stack **a, t_stack **b)
 {
     if (ft_strcmp(str, "sa") == 0)
-        sa();
+        sa(a, b);
     else if (ft_strcmp(str, "sb") == 0)
-        sb();
+        sb(a, b);
     else if (ft_strcmp(str, "ss") == 0)
-        ss();
+        ss(a, b);
     else if (ft_strcmp(str, "pa") == 0)
-        pa();
+        pa(a, b);
     else if (ft_strcmp(str, "pb") == 0)
-        pb();
+        pb(a, b);
     else if (ft_strcmp(str, "ra") == 0)
-        ra();
+        ra(a, b);
     else if (ft_strcmp(str, "rb") == 0)
-        rb();
+        rb(a, b);
     else if (ft_strcmp(str, "rr") == 0)
-        rr();
-    else if (ft_strcmp(str, "rra") == 0)
-        rra();
-    else
-        out(-1);
+        rr(a, b);
+    // else if (ft_strcmp(str, "rra") == 0)
+    //     rra(&(*a), &(*b));
+    // else
+    //     out(-1);
 }
