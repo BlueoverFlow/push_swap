@@ -1,6 +1,6 @@
 #include "../includes/push_swap.h"
 
-int     is_num(char *str)
+void     is_num(char *str)
 {
     int i;
     int n;
@@ -15,13 +15,12 @@ int     is_num(char *str)
     while(str[i])
     {
         if (!ft_isdigit(str[i]))
-            return (0);
+            out(-1);
         i++;
     }
-    return (1);
 }
 
-int     diplucated(t_stack_a *stack_a)
+void     is_diplucated(t_stack_a *stack_a)
 {
     t_stack_a   *tmp;
     t_stack_a   *root;
@@ -39,13 +38,12 @@ int     diplucated(t_stack_a *stack_a)
             {
                 i++;
                 if (i)
-                    return (out(-1));
+                   out(-1);
             }
             stack_a = stack_a->next;
         }
         tmp = tmp->next;
     }
-    return (1);
 }
 
 void push(t_stack_a **head, int data)
@@ -66,3 +64,4 @@ void print_list(t_stack_a *head)
         head = head->next;
     }
 }
+

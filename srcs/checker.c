@@ -2,20 +2,15 @@
 
 int main(int argc, char **argv)
 {
-    t_checker   checker;
-    t_stack_a     *stack_a = NULL;
+    t_checker       checker;
+    t_stack_a       *stack_a = NULL;
+    t_stack_b       *stack_b = NULL;
 
     init_(&checker, argc, argv);
-    if (get_args(&checker, &stack_a) <= 0 ||
-        diplucated(stack_a) <= 0)
-            return (0);
-    print_list(stack_a);
-    // while (get_next_line(0, &checker.instr) > 0)
-    // {
-    //     // check_input(checker);
-    //     // exec_instr(&checker);
-    //     ;printf("%s\n", checker.instr);
-    // }
+    get_args(&checker, &stack_a);
+    is_diplucated(stack_a);
+    while (get_next_line(0, &checker.instr) > 0)
+        stack_b = exec_instr(checker.instr, &stack_a);
     // is_sorted(checker);
     return (0);
 }
