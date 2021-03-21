@@ -2,82 +2,77 @@
 
 int    s(t_stack **stack)
 {
-    t_stack   **tmp;
     int         t;
 
     if (!*stack  || !(*stack)->next)
         return (0);
-    *tmp = (*stack)->next;
     t = (*stack)->data;
-    (*stack)->data = (*tmp)->data;
-    (*tmp)->data = t;
+    (*stack)->data = ((*stack)->next)->data;
+    ((*stack)->next)->data = t;
     return (1);
 }
 
 int    p(t_stack **src, t_stack **dst)
 {
-    t_stack **tmp;
+    t_stack *tmp;
 
     if (!*src)
         return (0);
-    *tmp = *src;
+    tmp = *src;
     push(dst, (*src)->data);
     *src = (*src)->next;
-    free(*tmp);
+    free(tmp);
     return (1);
 }
 
 int    r(t_stack **stack)
 {
-    t_stack **tmp;
+    t_stack *tmp;
 
     if (!s(stack))
         return (-1);
-    *tmp = *stack;
+    tmp = *stack;
     *stack = (*stack)->next;
     while (*stack)
     {
         s(stack);
         *stack = (*stack)->next;
     }
-    *stack = *tmp;
+    *stack = tmp;
 }
 
-void    rs(t_stack **a, t_stack **b, int code)
+void    both(t_stack **a, t_stack **b, int code)
 {
     if (code == 1)
+    {
+        s(a);
+        s(b);
+    }
+    else if (code == 2)
     {
         r(a);
         r(b);
     }
-    else
+    else if (code == 3)
     {
-        s(a);
-        s(b);
-    }  
+        rr(a);
+        rr(b);
+    }
 }
 
-void    exec_instr(char *str, t_stack **a, t_stack **b)
+int    rr(t_stack **stack)
 {
-    if (ft_strcmp(str, "sa") == 0)
-        s(a);
-    else if (ft_strcmp(str, "sb") == 0)
-        s(b);
-    else if (ft_strcmp(str, "ss") == 0)
-        rs(a, b, 2);
-    else if (ft_strcmp(str, "pa") == 0)
-        p(b, a);
-    else if (ft_strcmp(str, "pb") == 0)
-        p(a, b);
-    else if (ft_strcmp(str, "ra") == 0)
-        r(a);
-    else if (ft_strcmp(str, "rb") == 0)
-        r(b);
-    else if (ft_strcmp(str, "rr") == 0)
-        rs(a, b, 1);
-    // else if (ft_strcmp(str, "rra") == 0)
-    //     rra(a, b);
-    else
-        out(1);
-    print_list(*a, *b);
+    t_stack *tmp;
+    t_stack *root;
+
+    if (!*stack || !(*stack)->next)
+        return (0);
+    root = *stack;
+    while (((*stack)->next)->next)
+        *stack = (*stack)->next;
+    tmp = (*stack)->next;
+    (*stack)->next = NULL;
+    tmp->next = root;
+    *stack = tmp;
+    return (1);
 }

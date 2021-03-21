@@ -65,7 +65,7 @@ fclean: clean
 
 exec:
 	@echo "executing...\n\n====================="
-	@./$(FILE) 1 2 3 4
+	@./$(FILE) 3 2 1
 	@echo =====================
 
 re: fclean all exec

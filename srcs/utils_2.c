@@ -1,25 +1,5 @@
 #include "../includes/push_swap.h"
 
-void     is_num(char *str)
-{
-    int i;
-    int n;
-
-    i = 0;
-    n = 1;
-    if (str[0] == '-')
-    {
-        n = -1;
-        i++;
-    }
-    while(str[i])
-    {
-        if (!ft_isdigit(str[i]))
-            out(-1);
-        i++;
-    }
-}
-
 void     is_diplucated(t_stack *a)
 {
     t_stack   *tmp;
