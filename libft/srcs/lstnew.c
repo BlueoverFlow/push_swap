@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-mezz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/24 17:51:52 by ael-mezz          #+#    #+#             */
-/*   Updated: 2019/10/24 20:09:00 by ael-mezz         ###   ########.fr       */
+/*   Created: 2019/10/24 15:10:33 by ael-mezz          #+#    #+#             */
+/*   Updated: 2019/10/24 20:02:30 by ael-mezz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_list		*lstnew(void *content)
 {
-	int i;
-	int j;
+	t_list *ptr;
 
-	if (lst == NULL)
+	if (!(ptr = (t_list *)malloc(sizeof(t_list))))
 		return (NULL);
-	i = ft_lstsize(lst);
-	j = 0;
-	while (j < i - 1)
-	{
-		lst = lst->next;
-		j++;
-	}
-	return (lst);
+	ptr->content = (void *)content;
+	ptr->next = NULL;
+	return (ptr);
 }

@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   add_back.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-mezz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/24 16:45:34 by ael-mezz          #+#    #+#             */
-/*   Updated: 2019/10/24 22:15:05 by ael-mezz         ###   ########.fr       */
+/*   Created: 2019/10/24 20:45:52 by ael-mezz          #+#    #+#             */
+/*   Updated: 2019/10/24 21:22:19 by ael-mezz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+void	lstadd_back(t_list **alst, t_list *new)
 {
-	if (!(alst) || !(new))
+	if (alst == NULL)
 		return ;
-	new->next = *alst;
-	*alst = new;
+	if (*alst == NULL)
+	{
+		*alst = new;
+		return ;
+	}
+	lstlast(*alst)->next = new;
 }

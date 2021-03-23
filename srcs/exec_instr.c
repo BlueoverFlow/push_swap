@@ -1,33 +1,33 @@
 #include "../includes/push_swap.h"
 
-int    s(t_stack **stack)
+int    s(t_list **stack)
 {
     int         t;
 
     if (!*stack  || !(*stack)->next)
         return (0);
-    t = (*stack)->data;
-    (*stack)->data = ((*stack)->next)->data;
-    ((*stack)->next)->data = t;
+    t = (intptr_t)(*stack)->content;
+    (*stack)->content = ((*stack)->next)->content;
+    ((*stack)->next)->content = &t;
     return (1);
 }
 
-int    p(t_stack **src, t_stack **dst)
+int    p(t_list **src, t_list **dst)
 {
-    t_stack *tmp;
+    t_list *tmp;
 
     if (!*src)
         return (0);
     tmp = *src;
-    push(dst, (*src)->data);
+    push(dst, (*src)->content);
     *src = (*src)->next;
     free(tmp);
     return (1);
 }
 
-int    r(t_stack **stack)
+int    r(t_list **stack)
 {
-    t_stack *tmp;
+    t_list *tmp;
 
     if (!s(stack))
         return (-1);
@@ -41,29 +41,29 @@ int    r(t_stack **stack)
     *stack = tmp;
 }
 
-void    both(t_stack **a, t_stack **b, int code)
+void    both(t_list **stack_a, t_list **stack_b, int code)
 {
     if (code == 1)
     {
-        s(a);
-        s(b);
+        s(stack_a);
+        s(stack_b);
     }
     else if (code == 2)
     {
-        r(a);
-        r(b);
+        r(stack_a);
+        r(stack_b);
     }
     else if (code == 3)
     {
-        rr(a);
-        rr(b);
+        rr(stack_a);
+        rr(stack_b);
     }
 }
 
-int    rr(t_stack **stack)
+int    rr(t_list **stack)
 {
-    t_stack *tmp;
-    t_stack *root;
+    t_list *tmp;
+    t_list *root;
 
     if (!*stack || !(*stack)->next)
         return (0);
