@@ -1,73 +1,70 @@
 #include "../includes/push_swap.h"
 
-static void init_(t_checker *checker, int argc, char **argv, t_list **stack_a)
+static void init_(t_checker *checker, int argc, char **argv, t_stack **a)
 {
     (*checker).argc = argc;
     (*checker).argv = argv;
-    get_args(checker, stack_a);
-    is_diplucated(*stack_a);
+    get_args(checker, a);
+    is_diplucated(*a);
 }
 
-static void    exec_instr(char *str, t_list **stack_a, t_list **stack_b)
+static void    exec_instr(char *str, t_stack **a, t_stack **b)
 {
     if (!ft_strcmp(str, "sa"))
-        s(stack_a);
+        s(a);
     else if (!ft_strcmp(str, "sb"))
-        s(stack_b);
+        s(b);
     else if (!ft_strcmp(str, "ss"))
-        both(stack_a, stack_b, 1);
+        both(a, b, 1);
     else if (!ft_strcmp(str, "pa"))
-        p(stack_b, stack_a);
+        p(b, a);
     else if (!ft_strcmp(str, "ra"))
-        r(stack_a);
+        r(a);
     else if (!ft_strcmp(str, "rb"))
-        r(stack_b);
+        r(b);
     else if (!ft_strcmp(str, "rr"))
-        both(stack_a, stack_b, 2);
+        both(a, b, 2);
     else if (!ft_strcmp(str, "pb"))
-        p(stack_a, stack_b);
+        p(a, b);
     else if (!ft_strcmp(str, "rra"))
-        rr(stack_a);
+        rr(a);
     else if (!ft_strcmp(str, "rrb"))
-        rr(stack_b);
+        rr(b);
     else if (!ft_strcmp(str, "rrr"))
-        both(stack_a, stack_b, 3);
+        both(a, b, 3);
     else
         out(-1);
-    print_list(*stack_a, *stack_b);
+    print_list(*a, *b);
 }
 
-void static is_sorted(t_list *stack_a, t_list *stack_b)
+void static is_sorted(t_stack *a, t_stack *b)
 {
-    t_list *tmp;
+    t_stack *tmp;
 
-    if (stack_b)
+    if (b)
         out(0);
-    tmp = stack_a;
+    tmp = a;
     while (tmp->next)
     {
-        if (tmp->next && (tmp->content > tmp->next->content))
+        if (tmp->next && (tmp->data > tmp->next->data))
             out(0);
         tmp = tmp->next;
     }
     out(1);
 }
 
-static void minus(int i)
-{
-    i -= 1;
-}
-
 int main(int argc, char **argv)
 {
     t_checker   checker;
-    t_list     *stack_a = NULL;
-    t_list     *stack_b = NULL;
+    t_stack     *a = NULL;
+    t_stack     *b = NULL;
 
-    init_(&checker, argc, argv, &stack_a);
-    print_list(stack_a, stack_b);
+    init_(&checker, argc, argv, &a);
+    print_list(a, b);
+    action = 0;
     while (get_next_line(0, &checker.instr) > 0)
-        exec_instr(checker.instr, &stack_a, &stack_b);
-    print_list(stack_a, stack_b);
+        exec_instr(checker.instr, &a, &b);
+    printf("actions: %d\n", action);
+    is_sorted(a, b);
     return (0);
 }

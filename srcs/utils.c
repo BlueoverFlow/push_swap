@@ -31,10 +31,9 @@ void    out(int i)
     exit(0);
 }
 
-void    get_args(t_checker *checker, t_list **stack_a)
+void    get_args(t_checker *checker, t_stack **a)
 {
     int     i;
-    int     n;
 
     if ((*checker).argc == 1)
         exit(0);
@@ -42,9 +41,8 @@ void    get_args(t_checker *checker, t_list **stack_a)
     while (i < checker->argc)
     {
         is_num(checker->argv[i]);
-        n = ft_atoi(checker->argv[i]);
-        push(stack_a, n);
-        stack_a = &((*stack_a)->next);
+        push(a, ft_atoi(checker->argv[i]));
+        a = &((*a)->next);
         i++;
     }
 }

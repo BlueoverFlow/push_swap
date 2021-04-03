@@ -1,34 +1,37 @@
 #include "../includes/push_swap.h"
 
-int    s(t_list **stack)
+int    s(t_stack **stack)
 {
     int         t;
 
     if (!*stack  || !(*stack)->next)
         return (0);
-    t = (intptr_t)(*stack)->content;
-    (*stack)->content = ((*stack)->next)->content;
-    ((*stack)->next)->content = &t;
+    t = (*stack)->data;
+    (*stack)->data = ((*stack)->next)->data;
+    ((*stack)->next)->data = t;
+    action++;
     return (1);
 }
 
-int    p(t_list **src, t_list **dst)
+int    p(t_stack **src, t_stack **dst)
 {
-    t_list *tmp;
+    t_stack *tmp;
 
     if (!*src)
         return (0);
     tmp = *src;
-    push(dst, (*src)->content);
+    push(dst, (*src)->data);
     *src = (*src)->next;
     free(tmp);
+    action++;
     return (1);
 }
 
-int    r(t_list **stack)
+int    r(t_stack **stack)
 {
-    t_list *tmp;
+    t_stack *tmp;
 
+    int ac = action; //just to calculate number if actions
     if (!s(stack))
         return (-1);
     tmp = *stack;
@@ -39,31 +42,33 @@ int    r(t_list **stack)
         *stack = (*stack)->next;
     }
     *stack = tmp;
+    action = ac + 1;
+    return (1);
 }
 
-void    both(t_list **stack_a, t_list **stack_b, int code)
+void    both(t_stack **a, t_stack **b, int code)
 {
     if (code == 1)
     {
-        s(stack_a);
-        s(stack_b);
+        s(a);
+        s(b);
     }
     else if (code == 2)
     {
-        r(stack_a);
-        r(stack_b);
+        r(a);
+        r(b);
     }
     else if (code == 3)
     {
-        rr(stack_a);
-        rr(stack_b);
+        rr(a);
+        rr(b);
     }
 }
 
-int    rr(t_list **stack)
+int    rr(t_stack **stack)
 {
-    t_list *tmp;
-    t_list *root;
+    t_stack *tmp;
+    t_stack *root;
 
     if (!*stack || !(*stack)->next)
         return (0);
@@ -74,5 +79,6 @@ int    rr(t_list **stack)
     (*stack)->next = NULL;
     tmp->next = root;
     *stack = tmp;
+    action++;
     return (1);
 }

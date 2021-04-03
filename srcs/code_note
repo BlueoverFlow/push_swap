@@ -1,0 +1,66 @@
+printf("###var :%i###\n", data[i]);
+
+//     printf("###\tvar p:           %i\t###\n", p);
+//     printf("###\tvar i:           %i\t###\n", i);
+//     printf("###\tvar l:           %i\t###\n", l);
+//     printf("###\tvar l / 2:       %i\t###\n", l / 2);
+//     printf("###\tvar pre_distance:%i\t###\n", pre_distance);
+//     printf("###\tvar su_distance: %i\t###\n", su_distance);
+
+
+
+
+
+        printf("###\tvar %15s: %i\t###\n", "smaller:", smaller);
+        printf("###\tvar %15s: %i\t###\n", "i:", i);
+        printf("###\tvar %15s: %i\t###\n", "topper:", lst_elem(a, top));
+        printf("###\tvar %15s: %i\t###\n", "lst_elem(a, i)", lst_elem(a, i));
+        printf("###\tvar %15s: %i\t###\n", "index", index[i]);
+
+
+        static int      _top(t_stack **stack, int data, int code) // fully functional
+{
+    int         i;
+    int         l;
+    int         ninstr;
+    t_stack     *tmp;
+
+    i = 0;
+    ninstr = 0;
+    if (!stack || !*stack)
+        return (0);
+    tmp = *stack;
+    l = lstsize2(*stack);
+    while (tmp->data != data && ++i <= l)
+        tmp = tmp->next;
+    if (code == 0)
+        tmp = lstcpy(*stack);
+    else if (code == 1)
+        tmp = *stack;
+    while (tmp->data != data)
+    {
+        if (i > l / 2)
+            rr(&tmp);
+        else
+            r(&tmp);
+        ninstr++;
+    }
+    if (code == 0)
+    {
+        free_list(tmp);
+        tmp = NULL;
+        action -= ninstr;
+    }
+    return (ninstr);
+}
+
+  if (data == 10 && code == 1)
+    {
+        puts("\n\nHERE WE ARE ============================================\n\n");
+        print_list(*stack, NULL);
+        printf("###\tvar %15s: %i\t###\n", "l", l);
+        printf("###\tvar %15s: %i\t###\n", "l / 2", l / 2);
+        printf("###\tvar %15s: %i\t###\n", "i", i);
+        printf("###\tvar %15s: %i\t###\n", "tmp->data", tmp->data);
+        print_list(tmp, NULL);
+    }

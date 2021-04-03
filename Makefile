@@ -10,10 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = 	checker.c		\
-		push_swap.c		\
+SRCS = 	$(FILE).c		\
 		utils.c			\
 		utils_2.c		\
+		quick_sort.c	\
 		exec_instr.c
 
 LIBFT = libft/libft.a
@@ -65,7 +65,7 @@ fclean: clean
 
 exec:
 	@echo "executing...\n\n====================="
-	@./$(FILE) 3 2 1
+	@./$(FILE) 2 3 12 1 10 6 9 7 4 5 8 11
 	@echo =====================
 
 re: fclean all exec

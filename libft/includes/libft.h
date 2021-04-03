@@ -70,7 +70,7 @@ t_list				*lstlast(t_list *lst);
 void				lstadd_back(t_list **alst, t_list *new);
 void				lstdelone(t_list *lst, void (*del)(void *));
 void				lstclear(t_list **lst, void(*del)(void *));
-void				lstiter(t_list **lst, void (*f)(void *));
+void				lstiter(t_list *lst, void (*f)(void *));
 t_list				*lstmap(t_list *lst,
 								void *(*f)(void *), void(*del)(void *));
 char				*ft_ptoa(void *p, char c);
