@@ -14,10 +14,7 @@ int main(int argc, char **argv)
     t_stack     *a = NULL;
     t_stack     *b = NULL;
 
-    action = 0;
     init_(&checker, argc, argv, &a);
-    print_list(a, b);
     sort(&a, &b);
-    printf("## actions: %i##\n", action);
     return (0);
 }

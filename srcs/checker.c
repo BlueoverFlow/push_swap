@@ -34,7 +34,6 @@ static void    exec_instr(char *str, t_stack **a, t_stack **b)
         both(a, b, 3);
     else
         out(-1);
-    print_list(*a, *b);
 }
 
 void static is_sorted(t_stack *a, t_stack *b)
@@ -63,7 +62,11 @@ int main(int argc, char **argv)
     print_list(a, b);
     action = 0;
     while (get_next_line(0, &checker.instr) > 0)
+    {
         exec_instr(checker.instr, &a, &b);
+        print_list(a, b);
+        action++;
+    }
     printf("actions: %d\n", action);
     is_sorted(a, b);
     return (0);

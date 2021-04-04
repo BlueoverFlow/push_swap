@@ -13,8 +13,9 @@
 SRCS = 	$(FILE).c		\
 		utils.c			\
 		utils_2.c		\
-		quick_sort.c	\
-		exec_instr.c
+		wheel.c	\
+		exec_instr.c	\
+		quick_sort.c
 
 LIBFT = libft/libft.a
 

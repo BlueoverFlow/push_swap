@@ -9,7 +9,6 @@ int    s(t_stack **stack)
     t = (*stack)->data;
     (*stack)->data = ((*stack)->next)->data;
     ((*stack)->next)->data = t;
-    action++;
     return (1);
 }
 
@@ -23,7 +22,6 @@ int    p(t_stack **src, t_stack **dst)
     push(dst, (*src)->data);
     *src = (*src)->next;
     free(tmp);
-    action++;
     return (1);
 }
 
@@ -31,7 +29,6 @@ int    r(t_stack **stack)
 {
     t_stack *tmp;
 
-    int ac = action; //just to calculate number if actions
     if (!s(stack))
         return (-1);
     tmp = *stack;
@@ -42,11 +39,10 @@ int    r(t_stack **stack)
         *stack = (*stack)->next;
     }
     *stack = tmp;
-    action = ac + 1;
     return (1);
 }
 
-void    both(t_stack **a, t_stack **b, int code)
+int    both(t_stack **a, t_stack **b, int code)
 {
     if (code == 1)
     {
@@ -63,6 +59,7 @@ void    both(t_stack **a, t_stack **b, int code)
         rr(a);
         rr(b);
     }
+    return (1);
 }
 
 int    rr(t_stack **stack)
@@ -79,6 +76,5 @@ int    rr(t_stack **stack)
     (*stack)->next = NULL;
     tmp->next = root;
     *stack = tmp;
-    action++;
     return (1);
 }

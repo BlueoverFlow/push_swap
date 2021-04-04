@@ -98,3 +98,28 @@ t_stack         *lstcpy(t_stack *lst)
     cpy->next = lstcpy(lst->next);
     return (cpy);
 }
+
+int     lst_order(t_stack *stack, int data)
+{
+    int i;
+
+    i = 0;
+    if (!stack)
+        return (0);
+    while (stack->data != data && stack)
+    {
+        i++;
+        stack = stack->next;
+    }
+    return (i);
+}
+
+int      lst_elem(t_stack *stack, int i)
+{
+    int j;
+
+    j = -1;
+    while (++j != i)
+        stack = stack->next;
+    return (stack->data);
+}
