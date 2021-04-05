@@ -3,7 +3,7 @@
 
 # include "../libft/includes/libft.h"
 # define PHASE_1 a && *a
-# define PHASE_2 b && *b
+# define PHASE_2 b && *b && --wheel.l_b
 
 typedef struct          s_stack
 {
@@ -26,6 +26,9 @@ typedef struct s_wheel
     int         top;
     int         smaller;
     int         preaxe;
+    int         similarity;
+    size_t      l_a;
+    size_t      l_b;
 }               t_wheel;
 
 
@@ -34,6 +37,7 @@ void        push(t_stack **head, int data);
 void        get_args(t_checker *checker, t_stack **a);
 void        print_list(t_stack *a, t_stack *b);
 int         lst_order(t_stack *stack, int data);
+int         is_sorted(t_stack *a, t_stack *b, int code);
 int         lst_elem(t_stack *stack, int i);
 void        is_diplucated(t_stack *a);
 void        check_input(char *str);

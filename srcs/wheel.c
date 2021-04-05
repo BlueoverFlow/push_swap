@@ -15,7 +15,7 @@ static void    print_instr(int instr, int pres)
         ft_putstr_fd("sa\n", 1);
     if (pres == 2)
         ft_putstr_fd("pa\n", 1);
-    if (pres == 3)
+    if (pres == 3) 
         ft_putstr_fd("pb\n", 1);
     if (pres == 4)
         ft_putstr_fd("ra\n", 1);
@@ -59,7 +59,7 @@ static int      _top(t_stack **stack, int data)
     return (ninstr);
 }
 
-static void      _toping(t_stack **stack, int data, char s)
+static void      _toping(t_stack **stack, t_stack **extra, int data, int s)
 {
     int         i;
     int         l;
@@ -74,17 +74,21 @@ static void      _toping(t_stack **stack, int data, char s)
     {
         if (i <= l / 2)
         {
-            if (s == 'a')
+            if (s == 1)
                 print_instr(r(stack), 4);
-            if (s == 'b')
+            else if (s == 2)
                 print_instr(r(stack), 5);
+            else
+                print_instr(both(stack, extra, 2), 9);
         }
         else
         {
-            if (s == 'a')
+            if (s == 1)
                 print_instr(rr(stack), 6);
-            if (s == 'b')
+            else if (s == 2)
                 print_instr(rr(stack), 7);
+            else
+                print_instr(both(stack, extra, 3), 10);
         }
     }
 }
@@ -107,40 +111,54 @@ int     find_preaxe(t_stack *stack, int axe)
     return (data[i - 1]);
 }
 
-static int      s_scan(t_stack *a, t_stack *b, t_wheel wheel)
+static int distance(t_stack *a, t_stack *b, t_wheel wheel, int data, int *similarity)
+{
+    int     d;
+
+    *similarity = 0;
+    if ((lst_order(a, data) <= wheel.l_a / 2 && lst_order(b, wheel.preaxe) <= wheel.l_b / 2) ||
+        (lst_order(a, data) > wheel.l_a / 2 && lst_order(b, wheel.preaxe) > wheel.l_b / 2))
+    {
+        if (wheel.top_a > wheel.top_b)
+        {
+            d = wheel.top_a;
+            *similarity = wheel.top_b;
+        } 
+        else
+        {
+            d = wheel.top_b;
+            *similarity = wheel.top_a;
+        }
+    }
+    else
+        d = wheel.top_a + wheel.top_b;
+    return (d);
+}
+
+static int      s_scan(t_stack *a, t_stack *b, t_wheel wheel, int *similar)
 {
     t_stack     *tmp;
     int         i;
-    int         l_a;
-    int         l_b;
     int         index[lstsize2(a)];
+    int         similarity[lstsize2(a)];
 
-    l_a = lstsize2(a);
-    l_b = lstsize2(b);
+    wheel.l_a = lstsize2(a);
+    wheel.l_b = lstsize2(b);
+    *similar = 0;
     tmp = a;
     i = -1;
-    while (++i < l_a)
+    while (++i < wheel.l_a)
     {
         wheel.preaxe = find_preaxe(b, tmp->data);
         wheel.top_a = _top(&a, tmp->data);
         wheel.top_b = _top(&b, wheel.preaxe);
-        if ((lst_order(a, tmp->data) <= l_a / 2 && lst_order(b, wheel.preaxe) <= l_b / 2) ||
-            (lst_order(a, tmp->data) > l_a / 2 && lst_order(b, wheel.preaxe) > l_b / 2))
-        {
-            if (wheel.top_a > wheel.top_b)
-                index[i] = wheel.top_a;
-            else
-                index[i] = wheel.top_b;
-            
-        }
-        else
-            index[i] = wheel.top_a + wheel.top_b;
+        index[i] = distance(a, b, wheel, tmp->data, &similarity[i]);
         tmp = tmp->next;
     }
     i = 0;
     wheel.smaller = index[i];
     wheel.top = 0;
-    while (++i < l_a)
+    while (++i < wheel.l_a)
     {
         if (index[i] == wheel.smaller)
             if (lst_elem(a, i) < lst_elem(a, wheel.top))
@@ -151,6 +169,7 @@ static int      s_scan(t_stack *a, t_stack *b, t_wheel wheel)
             wheel.top = i;
         }
     }
+    *similar = similarity[wheel.top];
     return (lst_elem(a, wheel.top));
 }
 
@@ -159,21 +178,25 @@ void    sort(t_stack **a, t_stack **b)
     t_wheel wheel;
     int     top;
     int     *data;
-    int     l;
 
     _init_var(&wheel);
     while (PHASE_1)
     {
-        top = s_scan(*a, *b, wheel);
-        _toping(a, top, 'a');
-        _toping(b, find_preaxe(*b, top), 'b');
+        if ((*a)->data > (*a)->next->data)
+            print_instr(s(a), 1);
+        if (is_sorted(*a, *b, 1))
+            break;
+        top = s_scan(*a, *b, wheel, &(wheel.similarity));
+        while (--(wheel.similarity) > -1)
+             _toping(a, b, top, 3);
+        _toping(a, b, top, 1);
+        _toping(b, a, find_preaxe(*b, top), 2);
         print_instr(p(a, b), 3);
     }
-    l = quicksort(*b, &data);
+    wheel.l_b = quicksort(*b, &data) + 1;
     while (PHASE_2)
     {
-        _toping(b, data[l - 1], 'b');
-        l--;
+        _toping(b, a, data[wheel.l_b - 1], 2);
         print_instr(p(b, a), 2);
     }
 }

@@ -78,3 +78,25 @@ int    rr(t_stack **stack)
     *stack = tmp;
     return (1);
 }
+
+int is_sorted(t_stack *a, t_stack *b, int code)
+{
+    t_stack *tmp;
+
+    if (b && code == 0)
+        out(0);
+    tmp = a;
+    while (tmp->next)
+    {
+        if (tmp->next && (tmp->data > tmp->next->data))
+        {
+            if (code == 0)
+                out(0);
+            return (0);
+        }
+        tmp = tmp->next;
+    }
+    if (code == 0)
+        out(1);
+    return (1);
+}

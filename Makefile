@@ -10,10 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = 	$(FILE).c		\
-		utils.c			\
+SRCS =	utils.c			\
 		utils_2.c		\
-		wheel.c	\
+		wheel.c			\
 		exec_instr.c	\
 		quick_sort.c
 
@@ -36,37 +35,31 @@ HEADER = includes/push_swap.h
 SRCS :=	$(addprefix $(SRCS_PATH)/, $(SRCS))
 
 all: $(SRCS) $(HEADER)
-	@cd libft && make all && make bonus && cd ..
-	@$(CC) $(SRCS) $(LIBFT) $(FLAGS) -o push_swap
+	@cd libft && make all
+	@$(CC) srcs/checker.c $(SRCS) $(LIBFT) $(FLAGS) -o checker
+	@$(CC) srcs/pushswap.c $(SRCS) $(LIBFT) $(FLAGS) -o push_swap
 
 clean:
 	@echo "cleaning..."
-	@$(RM) $(FILE)
-	@cd srcs && $(RM) *.o
+	@$(RM) push_swap checker
 	@cd libft && make clean
 	@clear
 
-tclean:
-	@$(RM) $(FILE)
+fclean: clean
+	@cd libft && make fclean
 
-test: tclean
+test:
 	@$(CC) srcs/$(FILE).c $(LIBFT) $(FLAGS) -o $(FILE)
 	@echo "...test...\n\n====================="
 	@./$(FILE)
 
-compile: tclean
+compile:
 	@clear
 	@$(CC) $(SRCS) $(LIBFT) $(FLAGS) -o $(FILE)
 
-ag: compile exec
+ag:
+	@$(CC) srcs/checker.c $(SRCS) $(LIBFT) $(FLAGS) -o checker
+	@$(CC) srcs/pushswap.c $(SRCS) $(LIBFT) $(FLAGS) -o push_swap
+	@clear
 
-fclean: clean
-	@$(RM) $(LIBFT)
-	@cd libft && make fclean
-
-exec:
-	@echo "executing...\n\n====================="
-	@./$(FILE) 2 3 12 1 10 6 9 7 4 5 8 11
-	@echo =====================
-
-re: fclean all exec
+re: fclean all
