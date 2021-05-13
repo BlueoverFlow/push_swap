@@ -31,7 +31,7 @@ static size_t	ft_countwords(char const *s, char c)
 	return (count);
 }
 
-static char		**ft_koalloc(char **ptr, size_t i)
+static char	**ft_koalloc(char **ptr, size_t i)
 {
 	i += 1;
 	while (ptr[--i] != NULL)
@@ -40,16 +40,16 @@ static char		**ft_koalloc(char **ptr, size_t i)
 	return (NULL);
 }
 
-static char		**ft_split2(char const *s, char c, char **ptr, size_t cw)
+static char	**ft_split2(char const *s, char c, char **ptr, size_t cw)
 {
 	size_t	i;
 	int		start;
 	int		len;
 
-	i = 0;
+	i = -1;
 	start = 0;
 	len = 0;
-	while (s[start] && i < cw - 1)
+	while (s[start] && ++i < cw - 1)
 	{
 		while (s[start] == c && s[start])
 			start++;
@@ -59,17 +59,17 @@ static char		**ft_split2(char const *s, char c, char **ptr, size_t cw)
 			len++;
 		}
 		start -= len;
-		if (!(ptr[i] = ft_calloc(len + 1, sizeof(char))))
+		ptr[i] = ft_calloc(len + 1, sizeof(char));
+		if (!ptr[i])
 			return (ft_koalloc(ptr, i));
 		ft_memcpy(ptr[i], s + start, len);
 		start += len;
 		len = 0;
-		i++;
 	}
 	return (ptr);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char		**ptr;
 	size_t		cw;
@@ -77,7 +77,8 @@ char			**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	cw = ft_countwords(s, c);
-	if (!(ptr = (char **)malloc(sizeof(char *) * cw)))
+	ptr = (char **)malloc(sizeof(char *) * cw);
+	if (!ptr)
 		return (NULL);
 	ptr[cw - 1] = NULL;
 	return (ft_split2(s, c, ptr, cw));

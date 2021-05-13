@@ -16,7 +16,8 @@ char	*is_str2(size_t size)
 {
 	char	*str;
 
-	if ((str = (char*)malloc(sizeof(char) * (size + 1))) == 0)
+	str = (char *)malloc(sizeof(char) * (size + 1));
+	if (!str)
 		return (NULL);
 	return (str);
 }
@@ -25,7 +26,8 @@ char	*ft_strdup2(char *s1)
 {
 	char	*dest;
 
-	if ((dest = (char*)malloc(sizeof(char) * (ft_strlen(s1) + 1))) == 0)
+	dest = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (!dest)
 		return (NULL);
 	ft_strcpy(dest, s1);
 	return (dest);
@@ -36,7 +38,8 @@ char	*ft_strndup2(const char *s, size_t n)
 	unsigned int	i;
 	char			*cpy;
 
-	if ((cpy = (char*)malloc(sizeof(*cpy) * (n + 1))) == 0)
+	cpy = (char *)malloc(sizeof(*cpy) * (n + 1));
+	if (!cpy)
 		return (NULL);
 	i = 0;
 	while (*s && i < n)
@@ -50,7 +53,7 @@ char	*ft_strndup2(const char *s, size_t n)
 
 char	*ft_strchr2(const char *s, int c)
 {
-	char *str;
+	char	*str;
 
 	str = (char *)s;
 	if (!s)
@@ -79,10 +82,11 @@ char	*ft_strjoin2(char *s1, char *s2)
 		s1 = ft_strdup2(s2);
 		return (s1);
 	}
-	str1 = (char*)s1;
-	str2 = (char*)s2;
+	str1 = (char *)s1;
+	str2 = (char *)s2;
 	len = ft_strlen(str1) + ft_strlen(str2);
-	if ((dst = (char*)malloc(sizeof(char) * (len + 1))) == 0)
+	dst = (char *)malloc(sizeof(char) * (len + 1));
+	if (!dst)
 		return (NULL);
 	while (*str1)
 		*(dst++) = *(str1++);

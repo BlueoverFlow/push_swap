@@ -14,13 +14,14 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char *sub;
+	char	*sub;
 
 	if (s == NULL)
 		return (NULL);
 	else if (*s == '\0')
 		return (ft_calloc(1, sizeof(char)));
-	if (!(sub = (char *)ft_calloc(len + 1, sizeof(char))))
+	sub = (char *)ft_calloc(len + 1, sizeof(char));
+	if (!sub)
 		return (NULL);
 	if (!(start > ft_strlen(s)))
 		ft_memcpy(sub, s + start, len);

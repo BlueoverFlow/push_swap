@@ -12,6 +12,13 @@
 
 #include "../includes/libft.h"
 
+static void	init(int n, unsigned int *d, unsigned int *n1, size_t *count)
+{
+	*d = n;
+	*n1 = n;
+	*count = 0;
+}
+
 static char	*ft_n_isnegative(int n)
 {
 	char			*ptr;
@@ -20,9 +27,7 @@ static char	*ft_n_isnegative(int n)
 	size_t			count;
 
 	n *= -1;
-	d = n;
-	n1 = n;
-	count = 0;
+	init(n, &d, &n1, &count);
 	while (d != 0)
 	{
 		d /= 10;
@@ -30,7 +35,8 @@ static char	*ft_n_isnegative(int n)
 	}
 	if (count == 0)
 		count++;
-	if (!(ptr = ft_calloc(count + 2, sizeof(char))))
+	ptr = ft_calloc(count + 2, sizeof(char));
+	if (!ptr)
 		return (NULL);
 	ptr[0] = '-';
 	while (count--)
@@ -41,7 +47,7 @@ static char	*ft_n_isnegative(int n)
 	return (ptr);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char			*ptr;
 	unsigned int	d;
@@ -50,9 +56,7 @@ char		*ft_itoa(int n)
 
 	if (n < 0)
 		return (ft_n_isnegative(n));
-	d = n;
-	n1 = n;
-	count = 0;
+	init(n, &d, &n1, &count);
 	while (d != 0)
 	{
 		d /= 10;
@@ -60,7 +64,8 @@ char		*ft_itoa(int n)
 	}
 	if (count == 0)
 		count++;
-	if (!(ptr = ft_calloc(count + 1, sizeof(char))))
+	ptr = ft_calloc(count + 1, sizeof(char));
+	if (!ptr)
 		return (NULL);
 	while (count--)
 	{

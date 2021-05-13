@@ -14,7 +14,7 @@
 
 static int	places(unsigned long long n)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (n == 0)
@@ -27,7 +27,7 @@ static int	places(unsigned long long n)
 	return (count);
 }
 
-char		*ft_ptoa(void *p, char c)
+char	*ft_ptoa(void *p, char c)
 {
 	char				*s;
 	unsigned long long	n;
@@ -35,13 +35,17 @@ char		*ft_ptoa(void *p, char c)
 
 	n = (unsigned long long)p;
 	i = places(n);
-	if (!(s = (char*)ft_memalloc(i + 1)))
+	s = (char *)ft_memalloc(i + 1);
+	if (!s)
 		return (NULL);
 	if (p == NULL)
 		s[0] = '0';
 	while (n)
 	{
-		s[--i] = (n % 16 > 9) ? (n % 16 - 10 + c) : (n % 16 + '0');
+		if (n % 16 > 9)
+			s[--i] = (n % 16 - 10 + c);
+		else
+			s[--i] = (n % 16 + '0');
 		n /= 16;
 	}
 	return (s);

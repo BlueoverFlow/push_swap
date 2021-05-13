@@ -3,24 +3,28 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ael-mezz <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ael-mezz <ael-mezz@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/21 12:57:37 by ael-mezz          #+#    #+#              #
-#    Updated: 2021/03/20 22:40:51 by ael-mezz         ###   ########.fr        #
+#    Updated: 2021/05/12 17:06:21 by ael-mezz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	utils.c			\
 		utils_2.c		\
+		utils_3.c		\
+		utils_4.c		\
 		wheel.c			\
+		utils_5.c		\
 		exec_instr.c	\
-		quick_sort.c
+		quick_sort.c	\
+		bonus.c
 
-LIBFT = libft/libft.a
+LIBFT =	libft/libft.a
 
-FLAGS = -g #-Wall -Werror -Wextra -fsanitize=address
+FLAGS =	-g #-fsanitize=address #-Wall -Werror -Wextra
 
-SRCS_PATH = ./srcs
+SRCS_PATH =	./srcs
 
 CC = gcc
 
@@ -32,20 +36,18 @@ OBJ_DIR = mv *.o srcs
 
 HEADER = includes/push_swap.h
 
-SRCS :=	$(addprefix $(SRCS_PATH)/, $(SRCS))
+SRCS := $(addprefix $(SRCS_PATH)/, $(SRCS))
 
-all: $(SRCS) $(HEADER)
-	@cd libft && make all
+ops: $(SRCS) $(HEADER)
+	@cd libft && make all && make bonus
 	@$(CC) srcs/checker.c $(SRCS) $(LIBFT) $(FLAGS) -o checker
 	@$(CC) srcs/pushswap.c $(SRCS) $(LIBFT) $(FLAGS) -o push_swap
 
 clean:
 	@echo "cleaning..."
-	@$(RM) push_swap checker
-	@cd libft && make clean
-	@clear
 
-fclean: clean
+fclean:	clean
+	@$(RM) *checker *push_swap
 	@cd libft && make fclean
 
 test:
@@ -62,4 +64,4 @@ ag:
 	@$(CC) srcs/pushswap.c $(SRCS) $(LIBFT) $(FLAGS) -o push_swap
 	@clear
 
-re: fclean all
+re: fclean ops

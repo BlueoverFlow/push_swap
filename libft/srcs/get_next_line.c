@@ -12,7 +12,24 @@
 
 #include "../includes/libft.h"
 
-char		*get_line(char **buffer)
+static int	normi(char **newline, char *reader, char **buffer, char **tmp)
+{
+	if (reader)
+	{
+		*newline = ft_strndup2(*buffer, reader - *buffer);
+		if (!*newline)
+			return (0);
+		*tmp = *buffer;
+		*buffer = ft_strdup2(reader + 1);
+		if (!*buffer)
+			return (0);
+	}
+	else
+		*newline = ft_strdup2(*buffer);
+	return (1);
+}
+
+char	*get_line(char **buffer)
 {
 	char		*reader;
 	char		*newline;
@@ -20,15 +37,9 @@ char		*get_line(char **buffer)
 
 	reader = ft_strchr2(*buffer, '\n');
 	tmp = NULL;
-	if (reader)
-	{
-		if (!(newline = ft_strndup2(*buffer, reader - *buffer)))
-			return (NULL);
-		tmp = *buffer;
-		if (!(*buffer = ft_strdup2(reader + 1)))
-			return (NULL);
-	}
-	else if (!(newline = ft_strdup2(*buffer)))
+	if (!normi(&newline, reader, buffer, &tmp))
+		return (NULL);
+	if (!newline && !reader)
 		return (NULL);
 	if (!tmp)
 	{
@@ -40,7 +51,7 @@ char		*get_line(char **buffer)
 	return (newline);
 }
 
-int			get_buffer(char **buffer, char *reader, int fd, int *ret)
+int	get_buffer(char **buffer, char *reader, int fd, int *ret)
 {
 	char	*oldbuffer;
 
@@ -51,7 +62,8 @@ int			get_buffer(char **buffer, char *reader, int fd, int *ret)
 		{
 			reader[*ret] = '\0';
 			oldbuffer = *buffer;
-			if (!(*buffer = ft_strjoin2(*buffer, reader)))
+			*buffer = ft_strjoin2(*buffer, reader);
+			if (!*buffer)
 				return (0);
 			free(oldbuffer);
 			oldbuffer = NULL;
@@ -61,21 +73,22 @@ int			get_buffer(char **buffer, char *reader, int fd, int *ret)
 	return (1);
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	char		*reader;
 	static char	*buffer = NULL;
 	int			ret;
 
 	ret = 1;
-	if ((read(fd, NULL, 0) != 0 || fd < 0 || BUFFER_SIZE >= 2147483647 ||
-		BUFFER_SIZE < 0 || !(reader = malloc(BUFFER_SIZE + 1))))
+	if ((read(fd, NULL, 0) != 0 || fd < 0 || BUFFER_SIZE >= 2147483647
+			|| BUFFER_SIZE < 0 || !(reader = malloc(BUFFER_SIZE + 1))))
 		return (-1);
 	if (!(get_buffer(&buffer, reader, fd, &ret)))
 		return (-1);
 	if (buffer)
 	{
-		if (!(*line = get_line(&buffer)))
+		*line = get_line(&buffer);
+		if (!line)
 			return (-1);
 		if (ret)
 			return (1);

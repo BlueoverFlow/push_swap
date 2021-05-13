@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-mezz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ael-mezz <ael-mezz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 17:06:02 by ael-mezz          #+#    #+#             */
-/*   Updated: 2019/10/21 17:29:12 by ael-mezz         ###   ########.fr       */
+/*   Updated: 2021/05/04 13:31:10 by ael-mezz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-int		ft_atoi(const char *str)
+long int	ft_atoi(const char *str)
 {
 	int			a;
 	int			b;
@@ -34,9 +34,9 @@ int		ft_atoi(const char *str)
 		c = c + (str[a] - 48);
 		a++;
 		if ((c * b) > 2147483647)
-			return (-1);
+			return (2147483649);
 		else if ((c * b) < -2147483648)
-			return (0);
+			return (2147483649);
 	}
 	return ((int)(c * b));
 }

@@ -14,7 +14,7 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	long int n1;
+	long int	n1;
 
 	n1 = n;
 	if (n1 < 0)
@@ -33,7 +33,7 @@ void	ft_putnbr_fd(int n, int fd)
 
 void	ft_putnbr_fd2(float n, int fd)
 {
-	double n1;
+	double	n1;
 
 	n1 = n;
 	if (n1 < 0)
