@@ -22,4 +22,4 @@ output the smallest program using Push_swap instruction language that sorts inte
 | rrb           | rotates stuck B down by one |
 | rrr           | rotates both A and B down by one |
 
-To run tester.sh use: bash <(curl https://raw.githubusercontent.com/BlueoverFlow/push_swap/main/tester.sh?token=AOWCBBJ3PRARTPWP2A7SDFLAU6BBU)
+To run tester.sh use: `bash <(curl https://raw.githubusercontent.com/BlueoverFlow/push_swap/main/tester.sh?token=AOWCBBJ3PRARTPWP2A7SDFLAU6BBU)`
